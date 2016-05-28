@@ -29,7 +29,7 @@ Install the Python Requirements:
 $ pip install -r requirements.txt
 ```
 
-Then install the NPM Requirements (recommended use Node 4):
+Then install the NPM Requirements (recommended use Node 4 - NVM is your friend):
 
 ```
 $ npm install

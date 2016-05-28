@@ -12,6 +12,7 @@
     "redux"
   ],
   "author": "CodeZeus",
+  "repository": "https://github.com/codezeus/django-react-project-template",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.9.0",
