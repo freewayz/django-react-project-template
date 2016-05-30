@@ -1,36 +1,37 @@
 import React from 'react';
-import classNames from 'classnames';
 import { connect } from 'react-redux';
+import { IndexLink, Link } from 'react-router';
 
-import { logout } from '../actions';
-import { LoginForm } from '../forms';
+import { logoutAndRedirect } from '../actions';
 
-class AppView extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    const {status, statusType, isAuthenticated, userData} = this.props;
-    const alertClass = classNames({
-      'alert': true,
-      [`alert-${statusType}`]: true
-    });
+    const { isAuthenticated, userData, logout } = this.props;
 
     return (
       <div>
         <nav className="navbar navbar-default">
           <div className="container">
             <div className="navbar-header">
-              <a className="navbar-brand" href="#">
+              <IndexLink className="navbar-brand" to="/">
                 Django / React / Redux
-              </a>
+              </IndexLink>
+            </div>
+            <div>
+              <ul className="nav navbar-nav">
+                <li><IndexLink to="/">Home</IndexLink></li>
+                <li><Link to="/login">Login</Link></li>
+              </ul>
             </div>
             {
               isAuthenticated ?
               <div className="navbar-right">
                 <p className="navbar-text">Signed in as {userData.username}</p>
-                <button className="btn btn-default navbar-btn" onClick={this.props.logout}>
+                <button className="btn btn-default navbar-btn" onClick={logout}>
                   Logout
                 </button>
               </div> :
@@ -38,11 +39,8 @@ class AppView extends React.Component {
             }
           </div>
         </nav>
-
-        <div className="container">
-          <h1 className="page-header">Login Page</h1>
-          {status ? <div className={alertClass} role="alert">{status}</div> : ''}
-          { isAuthenticated ?  `Welcome ${userData.username}!` : <LoginForm /> }
+        <div className='container'>
+          {this.props.children}
         </div>
       </div>
     );
@@ -51,20 +49,18 @@ class AppView extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    status: state.auth.get('status'),
-    statusType: state.auth.get('statusType'),
-    isAuthenticated: state.auth.get('isAuthenticated'),
-    userData: state.auth.get('userData').toJS()
+    isAuthenticated: state.auth.isAuthenticated,
+    userData: state.auth.userData
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    logout: () => dispatch(logout())
+    logout: () => dispatch(logoutAndRedirect())
   }
 }
 
-export const App = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AppView);
+)(App);

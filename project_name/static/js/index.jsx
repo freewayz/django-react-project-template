@@ -1,10 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { List, Map } from 'immutable';
-import { Provider } from 'react-redux';
 
-import { App } from './containers/App';
-import store from './stores'
+import store from './stores';
+import { Root } from './containers';
 import { loginUserSuccess } from './actions';
 
 const mountNode = document.getElementById('app');
@@ -14,9 +12,4 @@ if (token !== null) {
     store.dispatch(loginUserSuccess(token, false));
 }
 
-render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  mountNode
-)
+render(<Root />, mountNode)

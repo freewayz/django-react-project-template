@@ -2,6 +2,7 @@ import jwtDecode from 'jwt-decode';
 
 import { checkStatus, parseJSON } from '../utils';
 import { LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_REQUEST, LOGOUT_USER } from '../constants';
+import { push } from 'react-router-redux';
 
 export function loginUserSuccess(token, showStatus) {
   localStorage.setItem('token', token);
@@ -37,6 +38,13 @@ export function logout() {
     }
 }
 
+export function logoutAndRedirect() {
+  return (dispatch, state) => {
+    dispatch(logout());
+    dispatch(push('/login'));
+  }
+}
+
 export function login(email, password) {
   return (dispatch) => {
     return fetch('http://127.0.0.1:8000/api/v1/auth/obtain_token/', {
@@ -54,6 +62,7 @@ export function login(email, password) {
       try {
         let decoded = jwtDecode(response.token);
         dispatch(loginUserSuccess(response.token, true));
+        dispatch(push('/'));
       } catch (e) {
         dispatch(loginUserFailure({
           response: {

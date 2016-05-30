@@ -21,5 +21,5 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     # Main Entry Point for Single Page App
-    url(r'^$', csrf_exempt(TemplateView.as_view(template_name='index.html'))),
+    url(r'^.*$', csrf_exempt(TemplateView.as_view(template_name='index.html'))),
 ]
