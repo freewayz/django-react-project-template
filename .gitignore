@@ -95,3 +95,4 @@ db.sqlite3
 node_modules/
 npm-debug.log
 webpack-stats.json
+project_name/static/bundles/

@@ -43,6 +43,12 @@ You should first build the assets with Webpack:
 $ npm run build
 ```
 
+You can also watch the files with:
+
+```
+$ npm run watch
+```
+
 Once built, you can run the Django dev server:
 
 ```

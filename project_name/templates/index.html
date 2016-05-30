@@ -5,9 +5,12 @@
 <html>
 <head>
   <title>Django / React / Redux</title>
+  <link rel="stylesheet" href="{% static 'third-party/css/bootstrap.min.css' %}">
 </head>
 <body>
   <div id="app"></div>
+
   {% render_bundle 'main' 'js' %}
+  <script type="text/javascript" src="{% static 'third-party/js/bootstrap.min.js' %}" />
 </body>
 </html>

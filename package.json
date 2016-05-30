@@ -4,6 +4,7 @@
   "description": "A starter template using a Django API as the backend of a ReactJS application.",
   "main": "index.js",
   "scripts": {
+    "watch": "./node_modules/.bin/webpack --progress --colors --watch --config ./webpack.config.js",
     "build": "./node_modules/.bin/webpack --config webpack.config.js"
   },
   "keywords": [
@@ -26,8 +27,16 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
+    "immutable": "^3.8.1",
+    "jwt-decode": "^2.0.1",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
-    "react-router": "^2.4.1"
+    "react-redux": "^4.4.5",
+    "react-router": "^2.4.1",
+    "redux": "^3.5.2",
+    "redux-form": "^5.2.5",
+    "redux-thunk": "^2.1.0",
+    "whatwg-fetch": "^1.0.0"
   }
 }

@@ -4,7 +4,7 @@ var BundleTracker = require('webpack-bundle-tracker');
 
 module.exports = {
   context: __dirname,
-  entry: './project_name/static/js/index',
+  entry: ['whatwg-fetch', './project_name/static/js/index'],
   output: {
     path: path.resolve('./project_name/static/bundles'),
     filename: '[name].js',
