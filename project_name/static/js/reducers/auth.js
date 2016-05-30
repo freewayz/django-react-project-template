@@ -1,6 +1,15 @@
 import jwtDecode from 'jwt-decode';
 
-import { LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_REQUEST, LOGOUT_USER } from '../constants';
+import {
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_FAILURE,
+  LOGIN_USER_REQUEST,
+  LOGOUT_USER,
+  DISMISS_AUTH_STATUS,
+  REGISTER_USER_SUCCESS,
+  REGISTER_USER_FAILURE,
+  REGISTER_USER_REQUEST
+} from '../constants';
 
 let initialState = {
   isAuthenticating: false,
@@ -10,6 +19,9 @@ let initialState = {
   status: '',
   statusType: ''
 };
+
+// @TODO implement registration action routes
+// @TODO look into form errors
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -37,6 +49,11 @@ export default (state = initialState, action) => {
         isAuthenticating: false,
         status: 'Your username or password are not correct',
         statusType: 'danger'
+      });
+    case DISMISS_AUTH_STATUS:
+      return Object.assign({}, state, {
+        status: '',
+        statusType: ''
       });
     case LOGOUT_USER:
       return Object.assign({}, state, {

@@ -1,8 +1,9 @@
 import React from 'react';
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { IndexLink, Link } from 'react-router';
 
-import { logoutAndRedirect } from '../actions';
+import { logoutAndRedirect, dismissAuthStatus } from '../actions';
 
 class App extends React.Component {
   constructor(props) {
@@ -10,7 +11,15 @@ class App extends React.Component {
   }
 
   render() {
-    const { isAuthenticated, userData, logout } = this.props;
+    const { status, statusType, isAuthenticated, userData, logout } = this.props;
+
+    const alertClass = classNames({
+      'alert': true,
+      'fade': true,
+      'in': true,
+      'alert-dismissible': true,
+      [`alert-${statusType}`]: true
+    });
 
     return (
       <div>
@@ -24,13 +33,16 @@ class App extends React.Component {
             <div>
               <ul className="nav navbar-nav">
                 <li><IndexLink to="/">Home</IndexLink></li>
-                <li><Link to="/login">Login</Link></li>
+                { ! isAuthenticated ?  <li><Link to="/login">Login</Link></li> : null }
+                { ! isAuthenticated ?  <li><Link to="/register">Register</Link></li> : null }
               </ul>
             </div>
             {
               isAuthenticated ?
               <div className="navbar-right">
-                <p className="navbar-text">Signed in as {userData.username}</p>
+                <p className="navbar-text">
+                  Signed in as <Link to="/dashboard">{userData.email}</Link>
+                </p>
                 <button className="btn btn-default navbar-btn" onClick={logout}>
                   Logout
                 </button>
@@ -40,6 +52,18 @@ class App extends React.Component {
           </div>
         </nav>
         <div className='container'>
+          {
+            status ?
+            <div className={alertClass}>
+              <button
+                type="button"
+                className="close"
+                data-dismiss="alert"
+                onClick={this.props.dismissStatus}>×</button>
+              {status}
+            </div> :
+            null
+          }
           {this.props.children}
         </div>
       </div>
@@ -49,6 +73,8 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    status: state.auth.status,
+    statusType: state.auth.statusType,
     isAuthenticated: state.auth.isAuthenticated,
     userData: state.auth.userData
   }
@@ -56,7 +82,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    logout: () => dispatch(logoutAndRedirect())
+    logout: () => dispatch(logoutAndRedirect()),
+    dismissStatus: () => dispatch(dismissAuthStatus()),
   }
 }
 

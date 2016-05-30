@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { LoginForm } from '../forms';
+import { RegisterForm } from '../forms';
 
-class LoginView extends React.Component {
+class RegisterView extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -13,8 +13,8 @@ class LoginView extends React.Component {
 
     return (
       <div>
-        <h1 className="page-header">Login Page</h1>
-        { isAuthenticated ?  `You are already authenticated!` : <LoginForm /> }
+        <h1 className="page-header">Register Page</h1>
+        { isAuthenticated ?  `You are already authenticated!` : <RegisterForm /> }
       </div>
     );
   }
@@ -33,4 +33,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginView);
+)(RegisterView);
