@@ -37,6 +37,7 @@
     "redux": "^3.5.2",
     "redux-form": "^5.2.5",
     "redux-thunk": "^2.1.0",
+    "text-encoding": "^0.6.0",
     "whatwg-fetch": "^1.0.0"
   }
 }

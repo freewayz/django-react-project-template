@@ -21,7 +21,6 @@ let initialState = {
 };
 
 // @TODO implement registration action routes
-// @TODO look into form errors
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -36,18 +35,25 @@ export default (state = initialState, action) => {
         isAuthenticating: false,
         isAuthenticated: true,
         token: action.payload.token,
-        userData: {
+        userData: Object.assign({}, state.userData, {
           userID: data.user_id,
           username: data.username,
           email: data.email
-        },
+        }),
         status: (action.payload.showStatus) ? 'You have been successfully logged in.' : '',
         statusType: 'success'
       });
     case LOGIN_USER_FAILURE:
+      let response = action.payload.error.body;
+      let status = 'Your username or password are not correct';
+
+      if (response.hasOwnProperty('non_field_errors')) {
+        status = response.non_field_errors.join(', ');
+      }
+
       return Object.assign({}, state, {
         isAuthenticating: false,
-        status: 'Your username or password are not correct',
+        status: status,
         statusType: 'danger'
       });
     case DISMISS_AUTH_STATUS:
@@ -62,6 +68,24 @@ export default (state = initialState, action) => {
         userData: {},
         status: 'You have been successfully logged out.',
         statusType: 'success'
+      });
+    case REGISTER_USER_REQUEST:
+      return Object.assign({}, state, {
+        isAuthenticating: true
+      });
+    case REGISTER_USER_SUCCESS:
+      return Object.assign({}, state, {
+        isAuthenticating: false,
+        userData: Object.assign({}, state.userData, {
+          first_name: action.payload.profile.first_name,
+          last_name: action.payload.profile.last_name
+        })
+      });
+    case REGISTER_USER_FAILURE:
+      return Object.assign({}, state, {
+        isAuthenticating: false,
+        status: 'Registration errors',
+        statusType: 'danger'
       });
     default:
       return state;

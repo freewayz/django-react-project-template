@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode';
 import { push } from 'react-router-redux';
 
-import { checkStatus, parseJSON } from '../utils';
+import { checkStatus, parseJSON, getResponseBody } from '../utils';
 import {
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAILURE,
@@ -29,7 +29,7 @@ export function loginUserFailure(error) {
   return {
     type: LOGIN_USER_FAILURE,
     payload: {
-      status: error.response.status
+      error: error
     }
   }
 }
@@ -71,6 +71,7 @@ export function login(email, password) {
       },
       body: JSON.stringify({ email: email, password: password })
     })
+    .then(dispatch(loginUserRequest))
     .then(checkStatus)
     .then(parseJSON)
     .then(response => {
@@ -88,19 +89,27 @@ export function login(email, password) {
       }
     })
     .catch(error => {
-      dispatch(loginUserFailure(error));
+      let reader = error.response.body.getReader();
+      getResponseBody(reader)
+      .then((result) => {
+        error.body = result;
+        dispatch(loginUserFailure(error));
+      });
     })
   }
 }
 
-export function registerUserSuccess() {
+export function registerUserSuccess(profile) {
   return {
     type: REGISTER_USER_SUCCESS,
-    payload: {}
+    payload: {
+      profile: profile
+    }
   }
 }
 
 export function registerUserFailure(error) {
+  console.log(error.body);
   return {
     type: REGISTER_USER_FAILURE,
     payload: {
@@ -131,14 +140,20 @@ export function register(...fields) {
         password: fields[0].password.value
       })
     })
+    .then(dispatch(registerUserRequest))
     .then(checkStatus)
     .then(parseJSON)
     .then(response => {
-      dispatch(registerUserSuccess());
-      dispatch(login(response.email, fields[0].password.value))
+      dispatch(registerUserSuccess(response));
+      dispatch(login(response.email, response.password))
     })
     .catch(error => {
-      dispatch(registerUserFailure(error));
+      let reader = error.response.body.getReader();
+      getResponseBody(reader)
+      .then((result) => {
+        error.body = result;
+        dispatch(registerUserFailure(error));
+      });
     })
   }
 }
