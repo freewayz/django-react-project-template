@@ -84,7 +84,7 @@ export default (state = initialState, action) => {
     case REGISTER_USER_FAILURE:
       return Object.assign({}, state, {
         isAuthenticating: false,
-        status: 'Registration errors',
+        status: 'This email is already in use',
         statusType: 'danger'
       });
     default:

@@ -33,8 +33,3 @@ class UserViewSet(viewsets.ModelViewSet):
             'status': 'Bad request',
             'message': 'Account could not be created with received data.'
         }, status=status.HTTP_400_BAD_REQUEST)
-
-    def retrieve(self, request, pk=None):
-        if pk == 'i':
-            return Response(AccountSerializer(request.user).data)
-        return super(UserViewSet, self).retrieve(request, pk)

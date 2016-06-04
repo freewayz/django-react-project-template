@@ -109,7 +109,6 @@ export function registerUserSuccess(profile) {
 }
 
 export function registerUserFailure(error) {
-  console.log(error.body);
   return {
     type: REGISTER_USER_FAILURE,
     payload: {

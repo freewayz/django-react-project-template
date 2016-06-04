@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { TextDecoder } from 'text-encoding';
 
 export function checkStatus(response) {
@@ -22,5 +23,13 @@ export function getResponseBody(reader) {
       stream: !result.done
     });
     return JSON.parse(body);
+  });
+}
+
+
+export function formGroupClass(field) {
+  return classNames({
+    'form-group': true,
+    'has-error': field.touched && field.error
   });
 }

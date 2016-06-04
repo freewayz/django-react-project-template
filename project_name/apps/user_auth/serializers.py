@@ -14,6 +14,3 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'link', 'email', 'created_at', 'updated_at',
                   'first_name', 'last_name', 'password',)
         read_only_fields = ('created_at', 'updated_at',)
-
-        def create(self, validated_data):
-            return Account.objects.create(**validated_data)
