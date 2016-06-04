@@ -10,7 +10,10 @@ import {
   DISMISS_AUTH_STATUS,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAILURE,
-  REGISTER_USER_REQUEST
+  REGISTER_USER_REQUEST,
+  GET_PROFILE_REQUEST,
+  GET_PROFILE_SUCCESS,
+  GET_PROFILE_FAILURE
 } from '../constants';
 
 export function loginUserSuccess(token, showStatus) {
@@ -152,6 +155,57 @@ export function register(...fields) {
       .then((result) => {
         error.body = result;
         dispatch(registerUserFailure(error));
+      });
+    })
+  }
+}
+
+export function getProfileRequest() {
+  return {
+    type: GET_PROFILE_REQUEST
+  }
+}
+
+export function getProfileSuccess(profile) {
+  return {
+    type: GET_PROFILE_SUCCESS,
+    payload: {
+      profile: profile
+    }
+  }
+}
+
+export function getProfileFailure(error) {
+  return {
+    type: GET_PROFILE_FAILURE,
+    payload: {
+      status: error.response.status
+    }
+  }
+}
+
+export function getProfile(id) {
+  return (dispatch) => {
+    return fetch(`http://127.0.0.1:8000/api/v1/users/${id}/`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(dispatch(getProfileRequest))
+    .then(checkStatus)
+    .then(parseJSON)
+    .then(response => {
+      dispatch(getProfileSuccess(response));
+    })
+    .catch(error => {
+      let reader = error.response.body.getReader();
+      getResponseBody(reader)
+      .then((result) => {
+        error.body = result;
+        dispatch(getProfileFailure(error));
       });
     })
   }

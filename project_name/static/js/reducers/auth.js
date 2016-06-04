@@ -8,7 +8,10 @@ import {
   DISMISS_AUTH_STATUS,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAILURE,
-  REGISTER_USER_REQUEST
+  REGISTER_USER_REQUEST,
+  GET_PROFILE_REQUEST,
+  GET_PROFILE_SUCCESS,
+  GET_PROFILE_FAILURE
 } from '../constants';
 
 let initialState = {
@@ -16,6 +19,8 @@ let initialState = {
   isAuthenticated: false,
   token: null,
   userData: {},
+  profileRequested: false,
+  currentProfile: {},
   status: '',
   statusType: ''
 };
@@ -87,6 +92,22 @@ export default (state = initialState, action) => {
         status: 'This email is already in use',
         statusType: 'danger'
       });
+    case GET_PROFILE_REQUEST:
+      return Object.assign({}, state, {
+        profileRequested: true
+      })
+    case GET_PROFILE_SUCCESS:
+      return Object.assign({}, state, {
+        profileRequested: false,
+        currentProfile: Object.assign({}, state.currentProfile, action.payload.profile)
+      })
+    case GET_PROFILE_FAILURE:
+      return Object.assign({}, state, {
+        profileRequested: false,
+        currentProfile: {},
+        status: 'Could not find profile for user',
+        statusType: 'danger'
+      })
     default:
       return state;
   }

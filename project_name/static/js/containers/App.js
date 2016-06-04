@@ -41,7 +41,7 @@ class App extends React.Component {
               isAuthenticated ?
               <div className="navbar-right">
                 <p className="navbar-text">
-                  Signed in as <Link to="/dashboard">{ userData.first_name ? `${userData.first_name} ${userData.last_name}` : `${userData.email}` }</Link>
+                  Signed in as <Link to={`/profile/${userData.userID}`}>{ userData.first_name ? `${userData.first_name} ${userData.last_name}` : `${userData.email}` }</Link>
                 </p>
                 <button className="btn btn-default navbar-btn" onClick={logout}>
                   Logout

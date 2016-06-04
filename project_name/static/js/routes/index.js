@@ -1,14 +1,29 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
+
 import App from '../containers/App';
-import { HomeView, LoginView, RegisterView, DashboardView } from '../views';
 import { mustAuth } from '../components/Authentication';
+import { onlyCurrentUser } from '../components/OnlyCurrentUser';
+import {
+  HomeView,
+  LoginView,
+  RegisterView,
+  ProfileView,
+  ProfileEditView,
+  DashboardView,
+  ChangePasswordView
+} from '../views';
 
 export default(
   <Route path="/" component={App}>
     <IndexRoute component={HomeView} />
     <Route path="login" component={LoginView} />
     <Route path="register" component={RegisterView} />
+    <Route path="profile/:id" component={ProfileView} />
+
+    // Authenticated Views
+    <Route path="profile/:id/edit" component={mustAuth(onlyCurrentUser(ProfileEditView))} />
     <Route path="dashboard" component={mustAuth(DashboardView)} />
+    <Route path="password" component={mustAuth(ChangePasswordView)} />
   </Route>
 );
