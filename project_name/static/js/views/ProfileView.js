@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 
 import { getProfile } from '../actions';
+import { ProfileNav } from './';
 
 class ProfileView extends React.Component {
   componentWillMount() {
@@ -10,8 +10,7 @@ class ProfileView extends React.Component {
   }
 
   render() {
-    const { isAuthenticated, userData, profile, profileRequested } = this.props;
-    const isUsersProfile = isAuthenticated && userData.userID === this.props.params.id;
+    const { profile, profileRequested } = this.props;
 
     return (
       <div>
@@ -21,20 +20,7 @@ class ProfileView extends React.Component {
             <div>
               <h1 className="page-header">Profile Page</h1>
 
-              {
-                isUsersProfile ?
-                  <ul className="nav nav-pills">
-                    <li>
-                      <Link to={`/profile/${userData.userID}/edit`}>Edit Profile</Link>
-                    </li>
-                    <li>
-                      <Link to="/password">Change Password</Link>
-                    </li>
-                  </ul> :
-                null
-              }
-
-              <hr />
+              <ProfileNav {...this.props} />
 
               <form className="form-horizontal">
                 <div className="form-group">
@@ -65,11 +51,9 @@ class ProfileView extends React.Component {
 
 ProfileView.propTypes = {
   getProfile: React.PropTypes.func.isRequired,
-  params: React.PropTypes.object.isRequired,
-  isAuthenticated: React.PropTypes.bool.isRequired,
-  userData: React.PropTypes.object.isRequired,
   profile: React.PropTypes.object.isRequired,
   profileRequested: React.PropTypes.bool.isRequired,
+  params: React.PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {

@@ -19,7 +19,7 @@ export default function onlyCurrentUser(Component) {
     }
 
     checkUser(userID, routeID) {
-      if (userID !== routeID) {
+      if (userID !== parseInt(routeID, 10)) {
         this.props.dispatch(push(`/profile/${routeID}`));
       }
     }
@@ -28,7 +28,7 @@ export default function onlyCurrentUser(Component) {
       return (
         <div>
           {
-            this.props.userID === this.props.params.id ?
+            this.props.userID === parseInt(this.props.params.id, 10) ?
               <Component {...this.props} /> :
             null
           }

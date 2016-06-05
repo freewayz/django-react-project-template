@@ -19,10 +19,8 @@ export default(
     <Route path="login" component={LoginView} />
     <Route path="register" component={RegisterView} />
     <Route path="profile/:id" component={ProfileView} />
-
-    // Authenticated Views
     <Route path="profile/:id/edit" component={mustAuth(onlyCurrentUser(ProfileEditView))} />
+    <Route path="profile/:id/password" component={mustAuth(onlyCurrentUser(ChangePasswordView))} />
     <Route path="dashboard" component={mustAuth(DashboardView)} />
-    <Route path="password" component={mustAuth(ChangePasswordView)} />
   </Route>
 );

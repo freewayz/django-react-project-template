@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { IndexLink, Link } from 'react-router';
 
 import { logoutAndRedirect } from '../../actions';
+import { NavLink } from '../';
 
 class NavBar extends React.Component {
   render() {
@@ -19,10 +20,10 @@ class NavBar extends React.Component {
             </div>
             <div>
               <ul className="nav navbar-nav">
-                <li><IndexLink to="/">Home</IndexLink></li>
-                {!isAuthenticated ? <li><Link to="/login">Login</Link></li> : null}
-                {!isAuthenticated ? <li><Link to="/register">Register</Link></li> : null}
-                {isAuthenticated ? <li><Link to="/dashboard">Dashboard</Link></li> : null}
+                <NavLink to="/" isIndex>Home</NavLink>
+                {!isAuthenticated ? <NavLink to="/login">Login</NavLink> : null}
+                {!isAuthenticated ? <NavLink to="/register">Register</NavLink> : null}
+                {isAuthenticated ? <NavLink to="/dashboard">Dashboard</NavLink> : null}
               </ul>
             </div>
             {
