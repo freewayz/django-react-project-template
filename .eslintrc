@@ -3,7 +3,8 @@
   "rules": {
     "react/jsx-uses-react": 1,
     "react/jsx-no-undef": 2,
-    "react/wrap-multilines": 2
+    "react/wrap-multilines": 2,
+    "quote-props": ["error", "consistent"]
   },
   "plugins": [
     "react"

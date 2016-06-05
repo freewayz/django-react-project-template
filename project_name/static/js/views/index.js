@@ -1,12 +1,12 @@
 // Pages
-export HomeView from './HomeView';
-export LoginView from './LoginView';
-export RegisterView from './RegisterView';
-export DashboardView from './DashboardView';
-export ProfileView from './ProfileView';
-export ProfileEditView from './ProfileEditView';
-export ChangePasswordView from './ChangePasswordView';
+export { default as HomeView } from './HomeView';
+export { default as LoginView } from './LoginView';
+export { default as RegisterView } from './RegisterView';
+export { default as DashboardView } from './DashboardView';
+export { default as ProfileView } from './ProfileView';
+export { default as ProfileEditView } from './ProfileEditView';
+export { default as ChangePasswordView } from './ChangePasswordView';
 
 // Partials
-export NavBar from './partials/NavBar';
-export StatusAlert from './partials/StatusAlert';
+export { default as NavBar } from './partials/NavBar';
+export { default as StatusAlert } from './partials/StatusAlert';

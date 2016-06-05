@@ -1,3 +1,2 @@
-// @NOTE no idea why I have to do this but whatever if works...
-export { App } from './App';
-export Root from './Root';
+export { default as App } from './App';
+export { default as Root } from './Root';

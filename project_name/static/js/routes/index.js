@@ -10,7 +10,7 @@ import {
   ProfileView,
   ProfileEditView,
   DashboardView,
-  ChangePasswordView
+  ChangePasswordView,
 } from '../views';
 
 export default(

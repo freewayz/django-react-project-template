@@ -11,10 +11,10 @@ import {
   REGISTER_USER_REQUEST,
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
-  GET_PROFILE_FAILURE
+  GET_PROFILE_FAILURE,
 } from '../constants';
 
-let initialState = {
+const initialState = {
   isAuthenticating: false,
   isAuthenticated: false,
   token: null,
@@ -22,19 +22,20 @@ let initialState = {
   profileRequested: false,
   currentProfile: {},
   status: '',
-  statusType: ''
+  statusType: '',
 };
 
 // @TODO implement registration action routes
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case LOGIN_USER_REQUEST:
+    case LOGIN_USER_REQUEST: {
       return Object.assign({}, state, {
-        isAuthenticating: true
+        isAuthenticating: true,
       });
-    case LOGIN_USER_SUCCESS:
-      let data = jwtDecode(action.payload.token);
+    }
+    case LOGIN_USER_SUCCESS: {
+      const data = jwtDecode(action.payload.token);
 
       return Object.assign({}, state, {
         isAuthenticating: false,
@@ -43,13 +44,14 @@ export default (state = initialState, action) => {
         userData: Object.assign({}, state.userData, {
           userID: data.user_id,
           username: data.username,
-          email: data.email
+          email: data.email,
         }),
         status: (action.payload.showStatus) ? 'You have been successfully logged in.' : '',
-        statusType: 'success'
+        statusType: 'success',
       });
-    case LOGIN_USER_FAILURE:
-      let response = action.payload.error.body;
+    }
+    case LOGIN_USER_FAILURE: {
+      const response = action.payload.error.body;
       let status = 'Your username or password are not correct';
 
       if (response.hasOwnProperty('non_field_errors')) {
@@ -58,57 +60,67 @@ export default (state = initialState, action) => {
 
       return Object.assign({}, state, {
         isAuthenticating: false,
-        status: status,
-        statusType: 'danger'
+        status,
+        statusType: 'danger',
       });
-    case DISMISS_AUTH_STATUS:
+    }
+    case DISMISS_AUTH_STATUS: {
       return Object.assign({}, state, {
         status: '',
-        statusType: ''
+        statusType: '',
       });
-    case LOGOUT_USER:
+    }
+    case LOGOUT_USER: {
       return Object.assign({}, state, {
         isAuthenticated: false,
         token: null,
         userData: {},
         status: 'You have been successfully logged out.',
-        statusType: 'success'
+        statusType: 'success',
       });
-    case REGISTER_USER_REQUEST:
+    }
+    case REGISTER_USER_REQUEST: {
       return Object.assign({}, state, {
-        isAuthenticating: true
+        isAuthenticating: true,
       });
-    case REGISTER_USER_SUCCESS:
+    }
+    case REGISTER_USER_SUCCESS: {
       return Object.assign({}, state, {
         isAuthenticating: false,
         userData: Object.assign({}, state.userData, {
           first_name: action.payload.profile.first_name,
-          last_name: action.payload.profile.last_name
-        })
+          last_name: action.payload.profile.last_name,
+        }),
       });
-    case REGISTER_USER_FAILURE:
+    }
+    case REGISTER_USER_FAILURE: {
       return Object.assign({}, state, {
         isAuthenticating: false,
         status: 'This email is already in use',
-        statusType: 'danger'
+        statusType: 'danger',
       });
-    case GET_PROFILE_REQUEST:
+    }
+    case GET_PROFILE_REQUEST: {
       return Object.assign({}, state, {
-        profileRequested: true
-      })
-    case GET_PROFILE_SUCCESS:
+        profileRequested: true,
+      });
+    }
+    case GET_PROFILE_SUCCESS: {
       return Object.assign({}, state, {
         profileRequested: false,
-        currentProfile: Object.assign({}, state.currentProfile, action.payload.profile)
-      })
-    case GET_PROFILE_FAILURE:
+        currentProfile: Object.assign({}, state.currentProfile, action.payload.profile),
+      });
+    }
+    case GET_PROFILE_FAILURE: {
       return Object.assign({}, state, {
         profileRequested: false,
         currentProfile: {},
         status: 'Could not find profile for user',
-        statusType: 'danger'
-      })
-    default:
+        statusType: 'danger',
+      });
+    }
+    default: {
       return state;
+    }
   }
-}
+};

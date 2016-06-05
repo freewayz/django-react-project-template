@@ -2,7 +2,7 @@ import React from 'react';
 
 import { NavBar, StatusAlert } from '../views';
 
-export class App extends React.Component {
+export default class App extends React.Component {
   render() {
     const children = this.props.children;
     return (

@@ -5,10 +5,6 @@ import { connect } from 'react-redux';
 import { dismissAuthStatus } from '../../actions';
 
 class StatusAlert extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { status, statusType } = this.props;
 
@@ -17,21 +13,22 @@ class StatusAlert extends React.Component {
       'fade': true,
       'in': true,
       'alert-dismissible': true,
-      [`alert-${statusType}`]: true
+      [`alert-${statusType}`]: true,
     });
 
     return (
       <div>
         {
           status ?
-          <div className={alertClass}>
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              onClick={this.props.dismissStatus}>×</button>
-            {status}
-          </div> :
+            <div className={alertClass}>
+              <button
+                type="button"
+                className="close"
+                data-dismiss="alert"
+                onClick={this.props.dismissStatus}
+              >×</button>
+              {status}
+            </div> :
           null
         }
       </div>
@@ -39,17 +36,23 @@ class StatusAlert extends React.Component {
   }
 }
 
+StatusAlert.propTypes = {
+  status: React.PropTypes.string.isRequired,
+  statusType: React.PropTypes.string.isRequired,
+  dismissStatus: React.PropTypes.func.isRequired,
+};
+
 function mapStateToProps(state) {
   return {
     status: state.auth.status,
-    statusType: state.auth.statusType
-  }
+    statusType: state.auth.statusType,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    dismissStatus: () => dispatch(dismissAuthStatus())
-  }
+    dismissStatus: () => dispatch(dismissAuthStatus()),
+  };
 }
 
 export default connect(
