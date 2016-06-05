@@ -28,10 +28,14 @@ export default class ProfileView extends React.Component {
 
             {
               isUsersProfile ?
-              <div>
-                <Link to={`/profile/${userData.userID}/edit`} className="btn btn-default">Edit Profile</Link>
-                <Link to="/password" className="btn btn-default">Change Password</Link>
-              </div> :
+              <ul className="nav nav-pills">
+                <li>
+                  <Link to={`/profile/${userData.userID}/edit`}>Edit Profile</Link>
+                </li>
+                <li>
+                  <Link to="/password">Change Password</Link>
+                </li>
+              </ul> :
               null
             }
 

@@ -1,2 +1,3 @@
-export App from './App';
+// @NOTE no idea why I have to do this but whatever if works...
+export { App } from './App';
 export Root from './Root';

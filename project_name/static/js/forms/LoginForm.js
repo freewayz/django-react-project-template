@@ -1,7 +1,7 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 
-import { login } from '../actions'
+import { login } from '../actions';
 import { formGroupClass } from '../utils';
 
 export const fields = ['email', 'password'];
@@ -19,8 +19,8 @@ const validate = values => {
     errors.password = 'Password is required';
   }
 
-  return errors
-}
+  return errors;
+};
 
 class LoginForm extends React.Component {
   login() {
@@ -31,30 +31,43 @@ class LoginForm extends React.Component {
   }
 
   render() {
-    const {fields: {email, password}, handleSubmit, submitting} = this.props;
+    const { fields: { email, password }, handleSubmit, submitting } = this.props;
 
     return (
       <form className="form" onSubmit={handleSubmit(this.login.bind(this))}>
         <div className={formGroupClass(email)}>
-          <label for="email">Email address</label>
+          <label htmlFor="email">Email address</label>
           <input type="email" className="form-control" id="email" placeholder="Email" {...email} />
           {email.touched && email.error && <p className="help-block">{email.error}</p>}
         </div>
         <div className={formGroupClass(password)}>
-          <label for="password">Password</label>
-          <input type="password" className="form-control" id="password" placeholder="******" {...password} />
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            className="form-control"
+            id="password"
+            placeholder="******"
+            {...password}
+          />
           {password.touched && password.error && <p className="help-block">{password.error}</p>}
         </div>
         <button className="btn btn-default" type="submit" disabled={submitting}>
-          {submitting ? <i/> : <i/>} Login
+          {submitting ? <i /> : <i />} Login
         </button>
       </form>
     );
   }
 }
 
+LoginForm.propTypes = {
+  dispatch: React.PropTypes.func.isRequired,
+  fields: React.PropTypes.object.isRequired,
+  handleSubmit: React.PropTypes.func.isRequired,
+  submitting: React.PropTypes.bool.isRequired,
+};
+
 export default reduxForm({
   form: 'login',
   fields,
-  validate
+  validate,
 })(LoginForm);

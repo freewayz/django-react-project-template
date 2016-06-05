@@ -1,8 +1,8 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-export function onlyCurrentUser(Component) {
+export default function onlyCurrentUser(Component) {
   class OnlyCurrentUser extends React.Component {
     componentWillMount() {
       this.checkUser(
@@ -19,28 +19,35 @@ export function onlyCurrentUser(Component) {
     }
 
     checkUser(userID, routeID) {
-      if (userID != routeID) {
+      if (userID !== routeID) {
         this.props.dispatch(push(`/profile/${routeID}`));
       }
     }
 
-    render () {
+    render() {
       return (
         <div>
           {
-            this.props.userID == this.props.params.id ?
-            <Component {...this.props}/> :
+            this.props.userID === this.props.params.id ?
+              <Component {...this.props} /> :
             null
           }
         </div>
-      )
-
+      );
     }
   }
 
-  const mapStateToProps = (state) => ({
-    userID: state.auth.userData.userID,
-  });
+  OnlyCurrentUser.propTypes = {
+    userID: React.PropTypes.number.isRequired,
+    params: React.PropTypes.object.isRequired,
+    dispatch: React.PropTypes.func.isRequired,
+  };
+
+  function mapStateToProps(state) {
+    return {
+      userID: state.auth.userData.userID,
+    };
+  }
 
   return connect(mapStateToProps)(OnlyCurrentUser);
 }

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "watch": "./node_modules/.bin/webpack --progress --colors --watch --config ./webpack.config.js",
-    "build": "./node_modules/.bin/webpack --config webpack.config.js"
+    "build": "./node_modules/.bin/webpack --config ./webpack.config.js",
+    "lint": "./node_modules/eslint/bin/eslint.js ./project_name/static/js/"
   },
   "keywords": [
     "django",
@@ -22,6 +23,11 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-runtime": "^6.9.0",
+    "eslint": "^2.11.1",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.8.1",
+    "eslint-plugin-jsx-a11y": "^1.2.3",
+    "eslint-plugin-react": "^5.1.1",
     "webpack": "^1.13.1",
     "webpack-bundle-tracker": "0.0.93",
     "webpack-dev-server": "^1.14.1"

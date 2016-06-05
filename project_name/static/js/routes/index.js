@@ -1,9 +1,8 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import App from '../containers/App';
-import { mustAuth } from '../components/Authentication';
-import { onlyCurrentUser } from '../components/OnlyCurrentUser';
+import { App } from '../containers';
+import { mustAuth, onlyCurrentUser } from '../components';
 import {
   HomeView,
   LoginView,
