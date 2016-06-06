@@ -20,7 +20,7 @@ used as a way to start all new projects in Django and React.
 Clone the repo:
 
 ```
-$ git clone git@github.com:dansackett/django-react-project-template.git .
+$ git clone git@github.com:codezeus/django-react-project-template.git .
 ```
 
 Install the Python Requirements:
